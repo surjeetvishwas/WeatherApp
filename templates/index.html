@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Weather App</h1>
+        <form method="POST" class="search-form">
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit">Search</button>
+        </form>
+        {% if weather %}
+        <div class="weather-card">
+            <h2>{{ weather.city }}</h2>
+            <img src="{{ weather.icon }}" alt="{{ weather.condition }}">
+            <p class="temperature">{{ weather.temperature }}°C</p>
+            <p class="condition">{{ weather.condition }}</p>
+            <div class="details">
+                <p>Humidity: {{ weather.humidity }}%</p>
+                <p>Wind Speed: {{ weather.wind_speed }} km/h</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
