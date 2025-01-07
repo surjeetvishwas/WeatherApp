@@ -14,15 +14,39 @@
             <input type="text" name="city" placeholder="Enter city name" required>
             <button type="submit">Search</button>
         </form>
+
         {% if weather %}
         <div class="weather-card">
-            <h2>{{ weather.city }}</h2>
-            <img src="{{ weather.icon }}" alt="{{ weather.condition }}">
-            <p class="temperature">{{ weather.temperature }}°C</p>
-            <p class="condition">{{ weather.condition }}</p>
+            <h2>{{ weather.current.city }}</h2>
+            <p class="condition">{{ weather.current.condition }} {{ weather.emoji }}</p>
+            <p class="temperature">{{ weather.current.temperature }}°C</p>
             <div class="details">
-                <p>Humidity: {{ weather.humidity }}%</p>
-                <p>Wind Speed: {{ weather.wind_speed }} km/h</p>
+                <p>Humidity: {{ weather.current.humidity }}%</p>
+                <p>Wind Speed: {{ weather.current.wind_speed }} km/h</p>
+                <p>AQI: {{ weather.current.air_quality['us-epa-index'] }}</p>  <!-- Showing AQI -->
+            </div>
+
+            <div class="forecast">
+                <h3>Forecast for the next 3 days</h3>
+                {% for day in weather.forecast %}
+                    <div class="forecast-card">
+                        <h4>{{ day.date }}</h4>
+                        <p>{{ day.condition }} {{ day.emoji }}</p>
+                        <p>Max: {{ day.max_temp }}°C | Min: {{ day.min_temp }}°C</p>
+
+                        <div class="hourly-forecast">
+                            <h5>Hourly Forecast:</h5>
+                            <div class="hourly-cards">
+                                {% for hour in day.hourly %}
+                                    <div class="hour-card">
+                                        <p>{{ hour.time }}: {{ hour.temp }}°C</p>
+                                        <p>{{ hour.condition }} </p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         {% endif %}
