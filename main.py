@@ -29,5 +29,6 @@ def home():
             weather = get_weather(city)
     return render_template('index.html', weather=weather)
 
+# Ensure app runs on port 8080 for Cloud Run and other production environments
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)  # Bind to 0.0.0.0 and port 8080 for Cloud Run
